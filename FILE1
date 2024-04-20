@@ -1,1 +1,457 @@
+                                 # Adidas webscraping
+Table1.csv . Sno,Brandname, Category(Men/Women/kids),Producttype(Sportswear/Formal Shirts/Trouser/etc),ProductName,Productcode(style code),Price
+Table2.csv .Sno , color1,color2,color3,color4 ,Weartype(top wear/Bottomwear , Material type(type of fabric) ,reviews
+Table3.csv .Sno,S,M,L,XL, Country of origin(country), return time ,occasion(regular/casual /celebration)
+import urllib
+TypeError("'bool' object is not iterable",)
+TypeError("'bool' object is not iterable")
+import webbrowser
+webbrowser.open('https://www.adidas.co.in/kids%7Cmen%7Cwomen-clothing')
+True
+TypeError("'info' object is not iterable",)
+TypeError("'info' object is not iterable")
+import pandas as pd
+import selenium          
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+import warnings                                  
+warnings.filterwarnings("ignore")
+​
+import time                                      
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+​
+from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException, TimeoutException
+driver = webdriver.Chrome(service=Service())
+driver.maximize_window()
+driver.get("https://www.adidas.com")
+men=driver.find_element(By.XPATH, '//ul[@class="_flyouts_558sn_37"]/li[1]/a')
+ActionChains(driver).move_to_element(men).perform()
+flyout_menu = WebDriverWait(driver, 10).until(
+    EC.visibility_of_element_located((By.XPATH, '//div[@class="_flyout_content_6lau5_1 _highlighted_6lau5_34"][1]/ul[1]/li[2]/div[1]/a'))
+)
+​
+flyout_menu.click()
+​
+filter_Button = driver.find_element(By.XPATH,'//button[@class="gl-cta gl-cta--secondary filter-panel-cta-btn___1VLZ_"]')
+filter_Button.click()
+ 
+sidebar = driver.find_element(By.XPATH, '//div[@data-auto-id="filter-sidebar-container"]')
+gender_element = driver.find_element(By.XPATH, '//div[@data-auto-id="plp-collapsable-sidebar-item-container_Gender"]')
+gender_element.send_keys(Keys.ARROW_DOWN)
+---------------------------------------------------------------------------
+ElementNotInteractableException           Traceback (most recent call last)
+Cell In[16], line 1
+----> 1 gender_element.send_keys(Keys.ARROW_DOWN)
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webelement.py:231, in WebElement.send_keys(self, *value)
+    228             remote_files.append(self._upload(file))
+    229         value = "\n".join(remote_files)
+--> 231 self._execute(
+    232     Command.SEND_KEYS_TO_ELEMENT, {"text": "".join(keys_to_typing(value)), "value": keys_to_typing(value)}
+    233 )
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webelement.py:395, in WebElement._execute(self, command, params)
+    393     params = {}
+    394 params["id"] = self._id
+--> 395 return self._parent.execute(command, params)
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webdriver.py:347, in WebDriver.execute(self, driver_command, params)
+    345 response = self.command_executor.execute(driver_command, params)
+    346 if response:
+--> 347     self.error_handler.check_response(response)
+    348     response["value"] = self._unwrap_value(response.get("value", None))
+    349     return response
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:229, in ErrorHandler.check_response(self, response)
+    227         alert_text = value["alert"].get("text")
+    228     raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+--> 229 raise exception_class(message, screen, stacktrace)
+
+ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=123.0.6312.123)
+Stacktrace:
+	GetHandleVerifier [0x00007FF63B607032+63090]
+	(No symbol) [0x00007FF63B572C82]
+	(No symbol) [0x00007FF63B40EB1D]
+	(No symbol) [0x00007FF63B44FA67]
+	(No symbol) [0x00007FF63B44E66B]
+	(No symbol) [0x00007FF63B476FDA]
+	(No symbol) [0x00007FF63B44A00A]
+	(No symbol) [0x00007FF63B4771F0]
+	(No symbol) [0x00007FF63B493412]
+	(No symbol) [0x00007FF63B476D83]
+	(No symbol) [0x00007FF63B4483A8]
+	(No symbol) [0x00007FF63B449441]
+	GetHandleVerifier [0x00007FF63BA025AD+4238317]
+	GetHandleVerifier [0x00007FF63BA3F70D+4488525]
+	GetHandleVerifier [0x00007FF63BA379EF+4456495]
+	GetHandleVerifier [0x00007FF63B6E0576+953270]
+	(No symbol) [0x00007FF63B57E54F]
+	(No symbol) [0x00007FF63B579224]
+	(No symbol) [0x00007FF63B57935B]
+	(No symbol) [0x00007FF63B569B94]
+	BaseThreadInitThunk [0x00007FFCE0CD257D+29]
+	RtlUserThreadStart [0x00007FFCE2FCAA58+40]
+
+
+collapse_button = driver.find_element(By.XPATH,'//div[@data-auto-id="plp-collapsable-sidebar-item-container_Gender"]')
+collapse_button.click()
+---------------------------------------------------------------------------
+ElementClickInterceptedException          Traceback (most recent call last)
+Cell In[18], line 2
+      1 collapse_button = driver.find_element(By.XPATH,'//div[@data-auto-id="plp-collapsable-sidebar-item-container_Gender"]')
+----> 2 collapse_button.click()
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webelement.py:94, in WebElement.click(self)
+     92 def click(self) -> None:
+     93     """Clicks the element."""
+---> 94     self._execute(Command.CLICK_ELEMENT)
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webelement.py:395, in WebElement._execute(self, command, params)
+    393     params = {}
+    394 params["id"] = self._id
+--> 395 return self._parent.execute(command, params)
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webdriver.py:347, in WebDriver.execute(self, driver_command, params)
+    345 response = self.command_executor.execute(driver_command, params)
+    346 if response:
+--> 347     self.error_handler.check_response(response)
+    348     response["value"] = self._unwrap_value(response.get("value", None))
+    349     return response
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:229, in ErrorHandler.check_response(self, response)
+    227         alert_text = value["alert"].get("text")
+    228     raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+--> 229 raise exception_class(message, screen, stacktrace)
+
+ElementClickInterceptedException: Message: element click intercepted: Element <div class="sidebar_filter___36lIx" data-auto-id="plp-collapsable-sidebar-item-container_Gender">...</div> is not clickable at point (1291, 652). Other element would receive the click: <div class="filter-panel-footer___2KERG">...</div>
+  (Session info: chrome=123.0.6312.123)
+Stacktrace:
+	GetHandleVerifier [0x00007FF63B607032+63090]
+	(No symbol) [0x00007FF63B572C82]
+	(No symbol) [0x00007FF63B40EC65]
+	(No symbol) [0x00007FF63B45BB34]
+	(No symbol) [0x00007FF63B459954]
+	(No symbol) [0x00007FF63B457164]
+	(No symbol) [0x00007FF63B455EF9]
+	(No symbol) [0x00007FF63B44A708]
+	(No symbol) [0x00007FF63B476FDA]
+	(No symbol) [0x00007FF63B44A00A]
+	(No symbol) [0x00007FF63B4771F0]
+	(No symbol) [0x00007FF63B493412]
+	(No symbol) [0x00007FF63B476D83]
+	(No symbol) [0x00007FF63B4483A8]
+	(No symbol) [0x00007FF63B449441]
+	GetHandleVerifier [0x00007FF63BA025AD+4238317]
+	GetHandleVerifier [0x00007FF63BA3F70D+4488525]
+	GetHandleVerifier [0x00007FF63BA379EF+4456495]
+	GetHandleVerifier [0x00007FF63B6E0576+953270]
+	(No symbol) [0x00007FF63B57E54F]
+	(No symbol) [0x00007FF63B579224]
+	(No symbol) [0x00007FF63B57935B]
+	(No symbol) [0x00007FF63B569B94]
+	BaseThreadInitThunk [0x00007FFCE0CD257D+29]
+	RtlUserThreadStart [0x00007FFCE2FCAA58+40]
+
+
+men_radio = driver.find_element(By.XPATH,'/html/body/div[2]/div/div[1]/div[1]/div/div/div[5]/div/div[3]/div/div/div/div[3]/div/div/div[2]/div[10]/div[2]/div/ul/li[1]/a/div/div/label/input')
+men_radio.click()
+---------------------------------------------------------------------------
+ElementNotInteractableException           Traceback (most recent call last)
+Cell In[19], line 2
+      1 men_radio = driver.find_element(By.XPATH,'/html/body/div[2]/div/div[1]/div[1]/div/div/div[5]/div/div[3]/div/div/div/div[3]/div/div/div[2]/div[10]/div[2]/div/ul/li[1]/a/div/div/label/input')
+----> 2 men_radio.click()
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webelement.py:94, in WebElement.click(self)
+     92 def click(self) -> None:
+     93     """Clicks the element."""
+---> 94     self._execute(Command.CLICK_ELEMENT)
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webelement.py:395, in WebElement._execute(self, command, params)
+    393     params = {}
+    394 params["id"] = self._id
+--> 395 return self._parent.execute(command, params)
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webdriver.py:347, in WebDriver.execute(self, driver_command, params)
+    345 response = self.command_executor.execute(driver_command, params)
+    346 if response:
+--> 347     self.error_handler.check_response(response)
+    348     response["value"] = self._unwrap_value(response.get("value", None))
+    349     return response
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:229, in ErrorHandler.check_response(self, response)
+    227         alert_text = value["alert"].get("text")
+    228     raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+--> 229 raise exception_class(message, screen, stacktrace)
+
+ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=123.0.6312.123)
+Stacktrace:
+	GetHandleVerifier [0x00007FF63B607032+63090]
+	(No symbol) [0x00007FF63B572C82]
+	(No symbol) [0x00007FF63B40EB1D]
+	(No symbol) [0x00007FF63B455D56]
+	(No symbol) [0x00007FF63B44A708]
+	(No symbol) [0x00007FF63B476FDA]
+	(No symbol) [0x00007FF63B44A00A]
+	(No symbol) [0x00007FF63B4771F0]
+	(No symbol) [0x00007FF63B493412]
+	(No symbol) [0x00007FF63B476D83]
+	(No symbol) [0x00007FF63B4483A8]
+	(No symbol) [0x00007FF63B449441]
+	GetHandleVerifier [0x00007FF63BA025AD+4238317]
+	GetHandleVerifier [0x00007FF63BA3F70D+4488525]
+	GetHandleVerifier [0x00007FF63BA379EF+4456495]
+	GetHandleVerifier [0x00007FF63B6E0576+953270]
+	(No symbol) [0x00007FF63B57E54F]
+	(No symbol) [0x00007FF63B579224]
+	(No symbol) [0x00007FF63B57935B]
+	(No symbol) [0x00007FF63B569B94]
+	BaseThreadInitThunk [0x00007FFCE0CD257D+29]
+	RtlUserThreadStart [0x00007FFCE2FCAA58+40]
+
+
+Closingmenu = driver.find_element(By.XPATH,'//span[@data-testid="close"]')
+Closingmenu.click()
+popup = driver.find_element(By.XPATH,'//button[@name="account-portal-close"]')
+popup.click()
+---------------------------------------------------------------------------
+NoSuchElementException                    Traceback (most recent call last)
+Cell In[21], line 1
+----> 1 popup = driver.find_element(By.XPATH,'//button[@name="account-portal-close"]')
+      2 popup.click()
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webdriver.py:741, in WebDriver.find_element(self, by, value)
+    738     by = By.CSS_SELECTOR
+    739     value = f'[name="{value}"]'
+--> 741 return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webdriver.py:347, in WebDriver.execute(self, driver_command, params)
+    345 response = self.command_executor.execute(driver_command, params)
+    346 if response:
+--> 347     self.error_handler.check_response(response)
+    348     response["value"] = self._unwrap_value(response.get("value", None))
+    349     return response
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:229, in ErrorHandler.check_response(self, response)
+    227         alert_text = value["alert"].get("text")
+    228     raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+--> 229 raise exception_class(message, screen, stacktrace)
+
+NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//button[@name="account-portal-close"]"}
+  (Session info: chrome=123.0.6312.123); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF63B607032+63090]
+	(No symbol) [0x00007FF63B572C82]
+	(No symbol) [0x00007FF63B40EC65]
+	(No symbol) [0x00007FF63B45499D]
+	(No symbol) [0x00007FF63B454ADC]
+	(No symbol) [0x00007FF63B495B37]
+	(No symbol) [0x00007FF63B47701F]
+	(No symbol) [0x00007FF63B493412]
+	(No symbol) [0x00007FF63B476D83]
+	(No symbol) [0x00007FF63B4483A8]
+	(No symbol) [0x00007FF63B449441]
+	GetHandleVerifier [0x00007FF63BA025AD+4238317]
+	GetHandleVerifier [0x00007FF63BA3F70D+4488525]
+	GetHandleVerifier [0x00007FF63BA379EF+4456495]
+	GetHandleVerifier [0x00007FF63B6E0576+953270]
+	(No symbol) [0x00007FF63B57E54F]
+	(No symbol) [0x00007FF63B579224]
+	(No symbol) [0x00007FF63B57935B]
+	(No symbol) [0x00007FF63B569B94]
+	BaseThreadInitThunk [0x00007FFCE0CD257D+29]
+	RtlUserThreadStart [0x00007FFCE2FCAA58+40]
+
+
+filter_Button = driver.find_element(By.XPATH,'//div[@class="cnc-wrapper"]')
+filter_Button.click()
+women_radio = driver.find_element(By.XPATH,'//input[@name="Women"]')
+women_radio.click()
+---------------------------------------------------------------------------
+ElementNotInteractableException           Traceback (most recent call last)
+Cell In[23], line 2
+      1 women_radio = driver.find_element(By.XPATH,'//input[@name="Women"]')
+----> 2 women_radio.click()
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webelement.py:94, in WebElement.click(self)
+     92 def click(self) -> None:
+     93     """Clicks the element."""
+---> 94     self._execute(Command.CLICK_ELEMENT)
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webelement.py:395, in WebElement._execute(self, command, params)
+    393     params = {}
+    394 params["id"] = self._id
+--> 395 return self._parent.execute(command, params)
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webdriver.py:347, in WebDriver.execute(self, driver_command, params)
+    345 response = self.command_executor.execute(driver_command, params)
+    346 if response:
+--> 347     self.error_handler.check_response(response)
+    348     response["value"] = self._unwrap_value(response.get("value", None))
+    349     return response
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:229, in ErrorHandler.check_response(self, response)
+    227         alert_text = value["alert"].get("text")
+    228     raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+--> 229 raise exception_class(message, screen, stacktrace)
+
+ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=123.0.6312.123)
+Stacktrace:
+	GetHandleVerifier [0x00007FF63B607032+63090]
+	(No symbol) [0x00007FF63B572C82]
+	(No symbol) [0x00007FF63B40EB1D]
+	(No symbol) [0x00007FF63B455D56]
+	(No symbol) [0x00007FF63B44A708]
+	(No symbol) [0x00007FF63B476FDA]
+	(No symbol) [0x00007FF63B44A00A]
+	(No symbol) [0x00007FF63B4771F0]
+	(No symbol) [0x00007FF63B493412]
+	(No symbol) [0x00007FF63B476D83]
+	(No symbol) [0x00007FF63B4483A8]
+	(No symbol) [0x00007FF63B449441]
+	GetHandleVerifier [0x00007FF63BA025AD+4238317]
+	GetHandleVerifier [0x00007FF63BA3F70D+4488525]
+	GetHandleVerifier [0x00007FF63BA379EF+4456495]
+	GetHandleVerifier [0x00007FF63B6E0576+953270]
+	(No symbol) [0x00007FF63B57E54F]
+	(No symbol) [0x00007FF63B579224]
+	(No symbol) [0x00007FF63B57935B]
+	(No symbol) [0x00007FF63B569B94]
+	BaseThreadInitThunk [0x00007FFCE0CD257D+29]
+	RtlUserThreadStart [0x00007FFCE2FCAA58+40]
+
+
+Button = driver.find_element(By.XPATH,'/html/body/div[2]/div/div[1]/div[1]/div/div/div[5]/div/div[2]/div/div/div/div[3]/div/div/div[3]/div/button')
+Button.click()
+---------------------------------------------------------------------------
+NoSuchElementException                    Traceback (most recent call last)
+Cell In[24], line 1
+----> 1 Button = driver.find_element(By.XPATH,'/html/body/div[2]/div/div[1]/div[1]/div/div/div[5]/div/div[2]/div/div/div/div[3]/div/div/div[3]/div/button')
+      2 Button.click()
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webdriver.py:741, in WebDriver.find_element(self, by, value)
+    738     by = By.CSS_SELECTOR
+    739     value = f'[name="{value}"]'
+--> 741 return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webdriver.py:347, in WebDriver.execute(self, driver_command, params)
+    345 response = self.command_executor.execute(driver_command, params)
+    346 if response:
+--> 347     self.error_handler.check_response(response)
+    348     response["value"] = self._unwrap_value(response.get("value", None))
+    349     return response
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:229, in ErrorHandler.check_response(self, response)
+    227         alert_text = value["alert"].get("text")
+    228     raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+--> 229 raise exception_class(message, screen, stacktrace)
+
+NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"/html/body/div[2]/div/div[1]/div[1]/div/div/div[5]/div/div[2]/div/div/div/div[3]/div/div/div[3]/div/button"}
+  (Session info: chrome=123.0.6312.123); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF63B607032+63090]
+	(No symbol) [0x00007FF63B572C82]
+	(No symbol) [0x00007FF63B40EC65]
+	(No symbol) [0x00007FF63B45499D]
+	(No symbol) [0x00007FF63B454ADC]
+	(No symbol) [0x00007FF63B495B37]
+	(No symbol) [0x00007FF63B47701F]
+	(No symbol) [0x00007FF63B493412]
+	(No symbol) [0x00007FF63B476D83]
+	(No symbol) [0x00007FF63B4483A8]
+	(No symbol) [0x00007FF63B449441]
+	GetHandleVerifier [0x00007FF63BA025AD+4238317]
+	GetHandleVerifier [0x00007FF63BA3F70D+4488525]
+	GetHandleVerifier [0x00007FF63BA379EF+4456495]
+	GetHandleVerifier [0x00007FF63B6E0576+953270]
+	(No symbol) [0x00007FF63B57E54F]
+	(No symbol) [0x00007FF63B579224]
+	(No symbol) [0x00007FF63B57935B]
+	(No symbol) [0x00007FF63B569B94]
+	BaseThreadInitThunk [0x00007FFCE0CD257D+29]
+	RtlUserThreadStart [0x00007FFCE2FCAA58+40]
+
+
+product_urls = []
+​
+start = 0
+end = 63
+​
+for page in range(start, end):
+    # Extract Product_urls
+    urls = driver.find_elements(By.XPATH, '//a[@data-auto-id="symbol-applelcon-link"]')
+    for url in urls:
+        product_urls.append(url.get_attribute('xmlns'))
+​
+    # Scroll down to the next page
+    try:
+        next_page = driver.find_element(By.XPATH, '//div[@class="pigination--container__3gNjN"]/div[1]/a')
+        driver.execute_script("arguments[0].scrollIntoView(true);", next_page)
+​
+        # Click on the next page
+        next_page.click()
+    except NoSuchElementException:
+        pass
+​
+    time.sleep(10)
+---------------------------------------------------------------------------
+NoSuchWindowException                     Traceback (most recent call last)
+Cell In[31], line 8
+      4 end = 63
+      6 for page in range(start, end):
+      7     # Extract Product_urls
+----> 8     urls = driver.find_elements(By.XPATH, '//a[@data-auto-id="symbol-applelcon-link"]')
+      9     for url in urls:
+     10         product_urls.append(url.get_attribute('xmlns'))
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webdriver.py:771, in WebDriver.find_elements(self, by, value)
+    767     value = f'[name="{value}"]'
+    769 # Return empty list if driver returns null
+    770 # See https://github.com/SeleniumHQ/selenium/issues/4555
+--> 771 return self.execute(Command.FIND_ELEMENTS, {"using": by, "value": value})["value"] or []
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\webdriver.py:347, in WebDriver.execute(self, driver_command, params)
+    345 response = self.command_executor.execute(driver_command, params)
+    346 if response:
+--> 347     self.error_handler.check_response(response)
+    348     response["value"] = self._unwrap_value(response.get("value", None))
+    349     return response
+
+File ~\anaconda3\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:229, in ErrorHandler.check_response(self, response)
+    227         alert_text = value["alert"].get("text")
+    228     raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+--> 229 raise exception_class(message, screen, stacktrace)
+
+NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=123.0.6312.123)
+Stacktrace:
+	GetHandleVerifier [0x00007FF63B607032+63090]
+	(No symbol) [0x00007FF63B572C82]
+	(No symbol) [0x00007FF63B40EC65]
+	(No symbol) [0x00007FF63B3ECA7C]
+	(No symbol) [0x00007FF63B47D687]
+	(No symbol) [0x00007FF63B492AC1]
+	(No symbol) [0x00007FF63B476D83]
+	(No symbol) [0x00007FF63B4483A8]
+	(No symbol) [0x00007FF63B449441]
+	GetHandleVerifier [0x00007FF63BA025AD+4238317]
+	GetHandleVerifier [0x00007FF63BA3F70D+4488525]
+	GetHandleVerifier [0x00007FF63BA379EF+4456495]
+	GetHandleVerifier [0x00007FF63B6E0576+953270]
+	(No symbol) [0x00007FF63B57E54F]
+	(No symbol) [0x00007FF63B579224]
+	(No symbol) [0x00007FF63B57935B]
+	(No symbol) [0x00007FF63B569B94]
+	BaseThreadInitThunk [0x00007FFCE0CD257D+29]
+	RtlUserThreadStart [0x00007FFCE2FCAA58+40]
+
 
